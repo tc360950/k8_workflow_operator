@@ -1,0 +1,28 @@
+apiVersion: "workflow.crd.com/v1"
+kind: WorkFlow
+metadata:
+  name: diamond-workflow-tm
+  labels:
+    label: "test-label"
+spec:
+  maxStepTimeout: 60
+  containers:
+    -
+      stepName: step0
+      image: hello-world
+      dependsOn: []
+    -
+      stepName: step1
+      image: ubuntu
+      command: ["sleep", "1s"]
+      dependsOn: ['step0']
+    -
+      stepName: step2
+      image: ubuntu
+      command: ["sleep", "200s"]
+      dependsOn: ["step0"]
+    -
+      stepName: step3
+      image: ubuntu
+      command: [ "sleep", "1s" ]
+      dependsOn: [ "step1", "step2" ]

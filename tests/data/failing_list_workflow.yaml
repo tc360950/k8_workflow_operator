@@ -1,0 +1,23 @@
+apiVersion: "workflow.crd.com/v1"
+kind: WorkFlow
+metadata:
+  name: failing-list-workflow
+  labels:
+    label: "test-label"
+spec:
+  maxStepTimeout: -1
+  containers:
+    -
+      stepName: step0
+      image: hello-world
+      dependsOn: []
+    -
+      stepName: step1
+      image: ubuntu
+      command: ["sleep", "1s"]
+      dependsOn: ['step0']
+    -
+      stepName: step2
+      image: ubuntu
+      command: ["hghghghghhhhhjhjhecho",  "hello"]
+      dependsOn: ["step1"]
